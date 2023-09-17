@@ -1,9 +1,9 @@
-<template>
-    <v-item-group selected-class="bg-primary">
+<template >
+    <v-item-group selected-class="bg-primary"> 
         
     <v-container>
     <v-card>
-        <v-row>
+        <v-row :style="image">
             <v-col
                 v-for="team in teams" :key="team.id"
                 cols="25"
@@ -42,6 +42,7 @@
  
  
  <script>
+ import foto from "@/components/pole.png"
  export default {
      data() {
          return {
@@ -50,6 +51,7 @@
              page: 1,
              totalPage: 10,
              limit: 6,
+             image: { backgroundImage: `url(${foto})` },
          }
      },
      
@@ -69,22 +71,10 @@
                  this.teams = res.teams;
                  console.log(res)
                  const { data } = res;
-                this.totalPage = Math.ceil(data.count/this.limit)
-                const leagaName = matches.map((compet) => {
-                if (compet.homeTeam.id.toString() === teamId) {
-                    return {name: compet.homeTeam.name};
-                } else {
-                    return { name: compet.awayTeam.name};
-                }
+                 this.totalPages = Math.ceil(data.count/this.limit)        
+             })
             },
-                 
-             }
-             
-             )
-         },
-         
-     }
- 
+        }
      
  }
  </script>

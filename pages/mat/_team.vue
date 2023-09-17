@@ -3,18 +3,20 @@
         <h3>ИГРЫ КОМАНД</h3>
         
         <v-breadcrumbs>
-        <v-breadcrumbs-item href="/">
+            <v-breadcrumbs-item href="/">
             {{ items[0].title }}
         </v-breadcrumbs-item> 
         <v-breadcrumbs-item>
             /
+        </v-breadcrumbs-item>
+        <v-breadcrumbs-item href="/comands">
+            {{ items[1].title }}
         </v-breadcrumbs-item> 
-        <v-breadcrumbs-item v-for="names in teamsNames" :key="names">
-       
-            
-            {{ names }}
-
- 
+        <v-breadcrumbs-item>
+            /
+        </v-breadcrumbs-item> 
+        <v-breadcrumbs-item>
+            {{ teamsNames }}
         </v-breadcrumbs-item> 
 
         
@@ -85,12 +87,10 @@
             },
             items: [
                 {
-                title: 'команды',
+                title: 'лиги',
                 },
                 {
-                title: [
-
-                ],
+                title: 'команды'
                 },
             ],
             showMenu: false,
@@ -112,9 +112,14 @@
         }
     },       
     async asyncData({params, $axios}) {
+        let teamsNames = ''
         const team = await $axios.$get(`api/teams/${params.team}/matches`)
-        return { team }
-          
+        if (team.matches[0].homeTeam.id.toString() === params.team) {
+            teamsNames = team.matches[0].homeTeam.name
+        } else {
+            teamsNames = team.matches[0].awayTeam.name
+        }
+        return { team, teamsNames }
              }
          }
 </script>
