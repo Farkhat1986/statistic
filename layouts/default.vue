@@ -5,7 +5,6 @@
         // sCs.com //
       </div>
       <v-spacer />
-   
       <v-btn to="/">
         ЛИГИ
       </v-btn>
@@ -24,6 +23,7 @@
     </v-main>
     <v-footer :absolute="fixed" app >
       <span>&copy; Bayramov Farhat {{ new Date().getFullYear() }} </span>
+      <v-spacer />
       <div>
     <v-btn>
       <NuxtLink to="/">Лиги</NuxtLink>

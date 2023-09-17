@@ -4,7 +4,17 @@
         <h4>MAТЧИ</h4>
         <h1>{{compet.competition.name}}</h1>
         <div><img :src="compet.competition.emblem" :height="45"></div>
-        <NuxtLink to="/">Лиги</NuxtLink>
+        <v-breadcrumbs>
+        <v-breadcrumbs-item href="/">
+            {{ items[0].title }}
+        </v-breadcrumbs-item> 
+        <v-breadcrumbs-item>
+            /
+        </v-breadcrumbs-item> 
+        <v-breadcrumbs-item>
+            {{compet.competition.name}}
+        </v-breadcrumbs-item>
+    </v-breadcrumbs>
         
         <div>    
             <v-data-table
@@ -67,6 +77,14 @@
 
             compet: [],
             date: '',
+            items: [
+                {
+                title: 'лиги',
+                },
+                {
+                title: '',
+                },
+            ],
             showMenu: false,
             headers: [
                       {text: 'Начало матча', value: 'utcDate', align: 'center'},

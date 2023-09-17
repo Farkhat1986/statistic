@@ -25,28 +25,15 @@
                         <div>{{ team.founded }}</div>
                         <div>{{ team.shortName }}</div>
                         <img :src="team.crest" :height="90">
-
                         </div>
                     </v-card>
-
                  </v-item>
-
             </v-col>
         </v-row>
-        <div class="text-center">
-    <v-pagination
-      v-model="page"
-      total-items="totalPages"
-      :length="8"
-      :total-visible="8"
-      prev-icon="mdi-menu-left"
-      next-icon="mdi-menu-right"
-    >
-
-</v-pagination>
-  </div>
     </v-card>
-    
+    <v-pagination class="ma-5" :length="totalPage" v-model="page" 
+    total-visible="7"
+    @input="getDataTeams()"></v-pagination>
 
 </v-container>
 </v-item-group>   
@@ -61,24 +48,39 @@
             
              teams: [],
              page: 1,
-             
+             totalPage: 10,
+             limit: 6,
          }
      },
-     computed: {
-        totalPages() {
-            return this.teams / 10 + 1;
-        }
-     },
+     
      mounted() {
          this.getDataTeams();
         
      },
      methods: {
          getDataTeams() {
-             this.$axios.$get('api/teams/')
+             this.$axios.$get('api/teams/', {
+                params: {
+                    limit: this.limit,
+                    offset: (this.page - 1) * this.limit,
+                }
+             })
              .then(res => {
                  this.teams = res.teams;
-             })
+                 console.log(res)
+                 const { data } = res;
+                this.totalPage = Math.ceil(data.count/this.limit)
+                const leagaName = matches.map((compet) => {
+                if (compet.homeTeam.id.toString() === teamId) {
+                    return {name: compet.homeTeam.name};
+                } else {
+                    return { name: compet.awayTeam.name};
+                }
+            },
+                 
+             }
+             
+             )
          },
          
      }
@@ -86,5 +88,3 @@
      
  }
  </script>
- <style >
- </style>

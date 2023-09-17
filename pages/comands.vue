@@ -1,20 +1,17 @@
 <template>
   <div class="container mx-auto mt-8 text-center">
-      <h1>КОМАНДЫ</h1>
-      <NuxtLink to="/" >
-          Лиги
-      </NuxtLink>
-      /
-      <NuxtLink to="/comands" >
-          Команды
-      </NuxtLink>
-      
-      <v-breadcrumbs v-for="item in items" :key="item.title" :item="item">
-   
-      <a href="/">{{ item.title }}</a>
-      <a href="/comands">{{ item.title }}</a>
-
-    </v-breadcrumbs>
+    <h1>КОМАНДЫ</h1>      
+        <v-breadcrumbs>
+            <v-breadcrumbs-item href="/">
+                {{ items[0].title }}
+            </v-breadcrumbs-item>
+            <v-breadcrumbs-item>
+                /
+            </v-breadcrumbs-item>
+            <v-breadcrumbs-item>
+               {{ items[1].title }}
+            </v-breadcrumbs-item>
+        </v-breadcrumbs>
       <ComandCard />
   </div>
 </template>
@@ -25,16 +22,11 @@ export default {
         return {
             items: [
                 {
-                    title: 'her',
-                    disabled: false,
-                    to: 'comands'
+                    title: 'лиги',
                 },
                 {
-                    title: 'her2',
-                    disabled: false,
-                    to: '/'
+                    title: 'команды',
                 },
-
             ],
         }
     }

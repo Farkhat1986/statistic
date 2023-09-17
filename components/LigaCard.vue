@@ -1,13 +1,9 @@
 <template>
     <v-item-group selected-class="bg-primary">
-        
     <v-container>
-        
       <v-card>
-  
         <v-row>
-            
-            <v-col
+          <v-col
             v-for="comp in competitions"
             :key="comp.id"
             cols="25"
@@ -26,20 +22,13 @@
                         </div>   
                 </v-card>
             </v-item>
+            
             </v-col>
+            
         </v-row>
-        <div class="text-center">
-    <v-pagination
-      v-model="page"
-      :length="6"
-      :total-visible="6"
-      prev-icon="mdi-menu-left"
-      next-icon="mdi-menu-right"
-    >
-
-</v-pagination>
-  </div>
+        
       </v-card>
+      <v-pagination class="ma-5" v-model="page" :length="totalPages" total-visible="3" @input="getData()"></v-pagination>
     </v-container>
     </v-item-group>     
  </template>
@@ -50,19 +39,8 @@
          return {
              competitions: [],
              page: 1,
-             items: [
-        {
-          title: 'Команды',
-          disabled: false,
-          to: '/comands',
-        },
-        {
-          title: 'Лиги',
-          disabled: false,
-          to: '/',
-        },
-        
-      ],
+             totalPages: 3,
+             limit: 6,
          }
      },
      mounted() {
@@ -70,12 +48,19 @@
      },
      methods: {
          getData() {
-             this.$axios.$get('api/competitions/')
+             this.$axios.$get('api/competitions/', {
+                params: {
+                    limit: this.limit,
+                    offset: (this.page - 1) * this.limit,
+                }
+             })
              .then(res => {
                  this.competitions = res.competitions;
-                
+                 console.log(res)
+                 const { data } = res;
+                 this.totalPages = Math.ceil(data.count/this.limit)        
              })
-         }
+         },
      }
  
      

@@ -1,8 +1,24 @@
 <template>
     <div class="text-center">
         <h3>ИГРЫ КОМАНД</h3>
-        <NuxtLink to="/comands">КОМАНДЫ</NuxtLink>  
+        
+        <v-breadcrumbs>
+        <v-breadcrumbs-item href="/">
+            {{ items[0].title }}
+        </v-breadcrumbs-item> 
+        <v-breadcrumbs-item>
+            /
+        </v-breadcrumbs-item> 
+        <v-breadcrumbs-item v-for="names in teamsNames" :key="names">
+       
             
+            {{ names }}
+
+ 
+        </v-breadcrumbs-item> 
+
+        
+        </v-breadcrumbs>
         <div>    
             <v-data-table
             :headers="headers"
@@ -64,7 +80,21 @@
 
             team: [],
             date: '',
+            params: {
+                id: null,
+            },
+            items: [
+                {
+                title: 'команды',
+                },
+                {
+                title: [
+
+                ],
+                },
+            ],
             showMenu: false,
+            
             headers: [
                       {text: 'Начало матча', value: 'utcDate', align: 'center'},
                       {text: 'Статус матча', value: 'status', align: 'center'},
@@ -80,10 +110,11 @@
                       
             ]
         }
-    },
+    },       
     async asyncData({params, $axios}) {
         const team = await $axios.$get(`api/teams/${params.team}/matches`)
-        return { team }  
+        return { team }
+          
              }
          }
 </script>
