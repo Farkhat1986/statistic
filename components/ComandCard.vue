@@ -3,6 +3,10 @@
         
     <v-container>
     <v-card>
+        <v-card-title primary-title>
+            <v-text-field v-model="search" label="Search" append-icon="mdi-magnify" @keyup.enter="getDataTeams()"></v-text-field>
+        </v-card-title>
+        
         <v-row :style="image">
             <v-col
                 v-for="team in teams" :key="team.id"
@@ -48,10 +52,12 @@
          return {
             
              teams: [],
+             search: '',
              page: 1,
              totalPage: 10,
              limit: 6,
              image: { backgroundImage: `url(${foto})` },
+             
          }
      },
      
@@ -63,8 +69,10 @@
          getDataTeams() {
              this.$axios.$get('api/teams/', {
                 params: {
+                    search: this.search,
                     limit: this.limit,
                     offset: (this.page - 1) * this.limit,
+                    
                 }
              })
              .then(res => {
