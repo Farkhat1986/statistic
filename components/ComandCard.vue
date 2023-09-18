@@ -46,7 +46,7 @@
  
  
  <script>
- import foto from "@/components/pole.png"
+ import foto from "@/components/hok.png"
  export default {
      data() {
          return {
@@ -67,6 +67,7 @@
      },
      methods: {
          getDataTeams() {
+        
              this.$axios.$get('api/teams/', {
                 params: {
                     search: this.search,
@@ -79,7 +80,7 @@
                  this.teams = res.teams;
                  console.log(res)
                  const { data } = res;
-                 this.totalPages = Math.ceil(data.count/this.limit)        
+                 this.totalPages = Math.ceil(data.count/this.limit)     
              })
             },
         }

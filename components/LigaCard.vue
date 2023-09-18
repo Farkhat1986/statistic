@@ -3,7 +3,7 @@
     <v-container>
       <v-card>
         <v-text-field v-model="search" label="Search" append-icon="mdi-magnify" @keyup.enter="getData()"></v-text-field>
-        <v-row class="bg">
+        <v-row :style="image" >
           <v-col
             v-for="comp in competitions"
             :key="comp.id"
@@ -34,11 +34,13 @@
  </template>
  
  <script>
+import foot from "@/components/football2.jpg"
  export default {
      data() {
          return {
              competitions: [],
              search: '',
+             image: { backgroundImage: `url(${foot})` },
          }
      },
      mounted() {
@@ -59,8 +61,6 @@
  }
  </script>
 <style>
-.bg {
-    background-color: green;
-}
+
 </style>
  

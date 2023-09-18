@@ -1,9 +1,11 @@
 <template>
   <v-app dark>
     <v-app-bar :clipped-left="clipped" fixed app>
-      <div>
-        // sCs.com //
+      <div :style="image" :height="60">
+        // sCs.COM //
       </div>
+        
+ 
       <v-spacer />
       <v-btn to="/">
         ЛИГИ
@@ -37,13 +39,16 @@
 </template>
 
 <script>
+import ball from "@/components/football.jpg"
 export default {
+  
   name: 'DefaultLayout',
   data() {
     return {
       clipped: false,
       drawer: false,
       fixed: false,
+      image: { backgroundImage: `url(${ball})` },
       items: [
         {
           icon: 'mdi-chart-bubble',
