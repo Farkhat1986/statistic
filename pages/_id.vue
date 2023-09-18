@@ -24,19 +24,20 @@
             class="elevation-1"
         >
         <template #top>
-            <v-menu ref="menu"
+            <v-menu 
+            ref="menu"
             v-model="showMenu">
             <template #activator="{ on, attrs }">
             <v-text-field
             v-model="date"
             clearable
             label="Дата с"
-            readjnly
+            readonly
             v-bind="attrs"
             v-on="on">
-
             </v-text-field>
             </template>
+
             <v-date-picker
             v-model="date"
             class="mt-4">
@@ -72,6 +73,7 @@
         }
     },
     
+    
     data() {
         return {
 
@@ -99,8 +101,13 @@
             ]
         }
     },
+    computed: {
+        filteredCompet() {
+            return this.date ? this.compet.filter(comp => new Date(comp.matches?.utcDate) > new Date(this.date)) : this.compet;
+        }
+    },
    
-      async asyncData({ params, $axios }) {
+    async asyncData({ params, $axios }) {
           const compet = await $axios.$get(`api/competitions/${params.id}/matches`)
           return { compet }  
       }

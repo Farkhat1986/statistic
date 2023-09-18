@@ -4,12 +4,12 @@
     <v-container>
     <v-card>
         <v-card-title primary-title>
-            <v-text-field v-model="search" label="Search" append-icon="mdi-magnify" @keyup.enter="getDataTeams()"></v-text-field>
+            <v-text-field v-model="filter" label="Search" append-icon="mdi-magnify"></v-text-field>
         </v-card-title>
         
         <v-row :style="image">
             <v-col
-                v-for="team in teams" :key="team.id"
+                v-for="team in filteredName" :key="team.id"
                 cols="25"
                 md="4">
                  <v-item v-slot="{ selectedClass, toggle }">
@@ -53,12 +53,19 @@
             
              teams: [],
              search: '',
+             filter: '',
              page: 1,
              totalPage: 10,
              limit: 6,
              image: { backgroundImage: `url(${foto})` },
              
          }
+     },
+     computed: {
+        filteredName() {
+            const fil = new RegExp(this.filter, 'i')
+            return this.filter ? this.teams.filter(val => val.match(fil)) : this.teams;
+        }
      },
      
      mounted() {

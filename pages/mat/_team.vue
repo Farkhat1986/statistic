@@ -1,6 +1,8 @@
 <template>
     <div class="text-center">
         <h3>ИГРЫ КОМАНД</h3>
+        <h1>{{teamsNames}}</h1>
+        <div><img :src="teamsCrest" :height="45"></div>
         
         <v-breadcrumbs>
             <v-breadcrumbs-item href="/">
@@ -79,7 +81,6 @@
     },
     data() {
         return {
-
             team: [],
             date: '',
             params: {
@@ -94,7 +95,6 @@
                 },
             ],
             showMenu: false,
-            
             headers: [
                       {text: 'Начало матча', value: 'utcDate', align: 'center'},
                       {text: 'Статус матча', value: 'status', align: 'center'},
@@ -106,20 +106,21 @@
                       {text: 'Эмблема гостей', value: 'awayTeam.crest', align: 'center'},
                       {text: 'Гостевая команда', value: 'awayTeam.name', align: 'center'},
                       
-                      
-                      
             ]
         }
     },       
     async asyncData({params, $axios}) {
+        let teamsCrest =''
         let teamsNames = ''
         const team = await $axios.$get(`api/teams/${params.team}/matches`)
         if (team.matches[0].homeTeam.id.toString() === params.team) {
             teamsNames = team.matches[0].homeTeam.name
+            teamsCrest = team.matches[0].homeTeam.crest
         } else {
             teamsNames = team.matches[0].awayTeam.name
+            teamsCrest = team.matches[0].awayTeam.crest
         }
-        return { team, teamsNames }
+        return { team, teamsNames, teamsCrest }
              }
          }
 </script>

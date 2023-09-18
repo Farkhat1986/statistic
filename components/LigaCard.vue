@@ -60,7 +60,5 @@ import foot from "@/components/football2.jpg"
      
  }
  </script>
-<style>
 
-</style>
  
